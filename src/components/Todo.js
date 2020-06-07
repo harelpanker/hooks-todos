@@ -43,6 +43,7 @@ export default function Todo({
             <ListItemText
               style={{
                 textDecoration: `${complited ? "line-through" : "none"}`,
+                paddingRight: "60px",
               }}>
               {task}
             </ListItemText>
