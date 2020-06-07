@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
 import uuid from "react-uuid";
@@ -10,12 +10,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 
 export default function TodoApp() {
-  const initialTodos = [
-    { id: uuid(), task: "Learn React", complited: false },
-    { id: uuid(), task: "Learn React Hooks", complited: false },
-    { id: uuid(), task: "Learn Figma", complited: false },
-  ];
+  const initialTodos = JSON.parse(window.localStorage.getItem("todos") || "[]");
   const [todos, setTodos] = useState(initialTodos);
+
+  useEffect(() => {
+    window.localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (newTodoText) => {
     setTodos([...todos, { id: uuid(), task: newTodoText, complited: false }]);
