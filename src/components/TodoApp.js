@@ -12,14 +12,25 @@ import Grid from "@material-ui/core/Grid";
 export default function TodoApp() {
   const initialTodos = [
     { id: uuid(), task: "Learn React", complited: false },
-    { id: uuid(), task: "Learn React Hooks", complited: true },
+    { id: uuid(), task: "Learn React Hooks", complited: false },
     { id: uuid(), task: "Learn Figma", complited: false },
   ];
-
   const [todos, setTodos] = useState(initialTodos);
 
   const addTodo = (newTodoText) => {
     setTodos([...todos, { id: uuid(), task: newTodoText, complited: false }]);
+  };
+
+  const removeTodo = (todoId) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== todoId);
+    setTodos(updatedTodos);
+  };
+
+  const toggleTodo = (todoId) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, complited: !todo.complited } : todo
+    );
+    setTodos(updatedTodos);
   };
 
   return (
@@ -39,7 +50,11 @@ export default function TodoApp() {
         <Grid container justify='center' style={{ marginTop: "2rem" }}>
           <Grid item xs={11} sm={8} md={4} lg={4}>
             <TodoForm addTodo={addTodo} />
-            <TodoList todos={todos} />
+            <TodoList
+              todos={todos}
+              removeTodo={removeTodo}
+              toggleTodo={toggleTodo}
+            />
           </Grid>
         </Grid>
       </Paper>
